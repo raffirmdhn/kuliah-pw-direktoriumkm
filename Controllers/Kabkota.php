@@ -12,7 +12,7 @@ class Kabkota
 
     public function index()
     {
-        $stmt = $this->pdo->query("SELECT  * FROM kabkota");
+        $stmt = $this->pdo->query("SELECT kk.*, provinsi.nama as provinsi FROM kabkota kk LEFT JOIN provinsi ON kk.provinsi_id = provinsi.id");
         $data = $stmt->fetchAll();
 
         return $data;
@@ -20,7 +20,7 @@ class Kabkota
 
     public function show($id)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM kabkota WHERE id=:id");
+        $stmt = $this->pdo->prepare("SELECT kk.*, provinsi.nama as provinsi FROM kabkota kk LEFT JOIN provinsi ON kk.provinsi_id = provinsi.id WHERE kk.id=:id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         $data = $stmt->fetch();

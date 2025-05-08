@@ -18,7 +18,7 @@ if (isset($_POST['type'])) {
     <div class="card-body">
       <div class="mb-2">
         <a class="btn btn-success btn-sm" href="?url=kabkota-input">
-          Tambah kabkota
+          Tambah Kab/Kota
         </a>
       </div>
 
@@ -29,7 +29,7 @@ if (isset($_POST['type'])) {
             <th>Nama</th>
             <th>Latitude</th>
             <th>Longitude</th>
-            <th>Provinsi Id</th>
+            <th>Provinsi</th>
             <th>Aksi</th>
           </tr>
         </thead>
@@ -41,7 +41,7 @@ if (isset($_POST['type'])) {
               <td><?= $row['nama'] ?></td>
               <td><?= $row['latitude'] ?></td>
               <td><?= $row['longitude'] ?></td>
-              <td><?= $row['provinsi_id'] ?></td>
+              <td><?= $row['provinsi'] ?></td>
               <td>
                 <div class="d-flex">
                   <a href="?url=kabkota-input&id=<?= $row['id'] ?>" class="btn btn-sm btn-warning mr-2">Edit</a>
@@ -58,11 +58,10 @@ if (isset($_POST['type'])) {
         <tfoot>
           <tr>
             <th>No</th>
-            <th>No</th>
             <th>Nama</th>
             <th>Latitude</th>
             <th>Longitude</th>
-            <th>Provinsi Id</th>
+            <th>Provinsi</th>
             <th>Aksi</th>
           </tr>
         </tfoot>
