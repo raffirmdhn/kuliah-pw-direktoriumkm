@@ -33,6 +33,7 @@ if (isset($_POST['type'])) {
             <th>Website</th>
             <th>Email</th>
             <th>Rating</th>
+            <th>Provinsi</th>
             <th>Kab/Kota</th>
             <th>Kategori UMKM</th>
             <th>Pembina</th>
@@ -51,6 +52,7 @@ if (isset($_POST['type'])) {
               <td><?= $row['website'] ?: '-' ?></td>
               <td><?= $row['email'] ?: '-' ?></td>
               <td><?= $row['rating'] ?></td>
+              <td><?= $row['provinsi'] ?></td>
               <td><?= $row['kabkota'] ?></td>
               <td><?= $row['kategori_umkm'] ?></td>
               <td><?= $row['pembina'] ?></td>
@@ -77,6 +79,7 @@ if (isset($_POST['type'])) {
             <th>Website</th>
             <th>Email</th>
             <th>Rating</th>
+            <th>Provinsi</th>
             <th>Kab/Kota</th>
             <th>Kategori UMKM</th>
             <th>Pembina</th>

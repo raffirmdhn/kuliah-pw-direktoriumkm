@@ -14,6 +14,10 @@ if (isset($_POST['type'])) {
     $row = $umkm->update($umkm_id, $_POST);
     echo "<script>alert('Data $row[nama] berhasil diperbarui')</script>";
     echo "<script>window.location='?url=umkm'</script>";
+  } else if ($_POST['type'] == 'getKabKota') {
+    $row = $umkm->getKabKota($_POST['provinsi_id']);
+    echo json_encode($row);
+    exit;
   }
 }
 ?>
@@ -58,16 +62,25 @@ if (isset($_POST['type'])) {
           <input type="number" class="form-control" id="rating" name="rating" value="<?= getSafeFormValue($show_umkm, 'rating') ?>" placeholder="Rating (1-5)" min="1" max="5" required>
         </div>
         <div class="form-group">
-          <label for="kabkota_id">Kabupaten/Kota <span style="color: red;">*</span></label>
-          <select class="form-control" id="kabkota_id" name="kabkota_id" required>
-            <option value="">Pilih Kabupaten/Kota</option>
-            <?php foreach ($umkm->getKabKota() as $kabkota): ?>
-              <option value="<?= $kabkota['id'] ?>" <?= getSafeFormValue($show_umkm, 'kabkota_id') == $kabkota['id'] ? 'selected' : '' ?>>
-                <?= $kabkota['nama'] ?>
+          <label for="provinsi_id">Provinsi <span style="color: red;">*</span></label>
+          <select class="form-control" id="provinsi_id" name="provinsi_id" required>
+            <option value="">Pilih Provinsi</option>
+            <?php var_dump($show_umkm) ?>
+            <?php foreach ($umkm->getProvinsi() as $provinsi): ?>
+              <option value="<?= $provinsi['id'] ?>" <?= getSafeFormValue($show_umkm, 'provinsi_id') == $provinsi['id'] ? 'selected' : '' ?>>
+                <?= $provinsi['nama'] ?>
               </option>
             <?php endforeach; ?>
           </select>
         </div>
+
+        <div class="form-group">
+          <label for="kabkota_id">Kabupaten/Kota <span style="color: red;">*</span></label>
+          <select class="form-control" id="kabkota_id" name="kabkota_id" required>
+            <option value="">Pilih Kabupaten/Kota</option>
+          </select>
+        </div>
+
         <div class="form-group">
           <label for="kategori_umkm_id">Kategori UMKM <span style="color: red;">*</span></label>
           <select class="form-control" id="kategori_umkm_id" name="kategori_umkm_id" required>
@@ -102,6 +115,7 @@ if (isset($_POST['type'])) {
   </form>
 </div>
 
+<!-- Format Rupiah Modal -->
 <script>
   function formatRupiah(angka) {
     return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -123,5 +137,56 @@ if (isset($_POST['type'])) {
     const raw = unformatRupiah(this.value);
     modalInput.value = raw;
     this.value = formatRupiah(raw);
+  });
+</script>
+
+<!-- Provinsi Change, Fetch Kabkota -->
+<script>
+  $(document).ready(function() {
+    function fetchKabKota(provinsiId, selectedKabKotaId = null) {
+      $('#kabkota_id').html('<option value="">Memuat...</option>');
+
+      if (provinsiId) {
+        $.ajax({
+          url: 'ajax.php', // Sesuaikan jika endpoint-nya beda
+          method: 'POST',
+          data: {
+            action: 'getKabKota',
+            provinsi_id: provinsiId
+          },
+          dataType: 'json',
+          success: function(response) {
+            $('#kabkota_id').html('<option value="">Pilih Kabupaten/Kota</option>');
+            $.each(response, function(index, kabkota) {
+              $('#kabkota_id').append(
+                $('<option>', {
+                  value: kabkota.id,
+                  text: kabkota.nama,
+                  selected: kabkota.id == selectedKabKotaId
+                })
+              );
+            });
+          },
+          error: function() {
+            $('#kabkota_id').html('<option value="">Gagal memuat data</option>');
+          }
+        });
+      } else {
+        $('#kabkota_id').html('<option value="">Pilih Kabupaten/Kota</option>');
+      }
+    }
+
+    // Fetch on page load if provinsi is pre-selected
+    const initialProvinsiId = $('#provinsi_id').val();
+    const initialKabKotaId = '<?= getSafeFormValue($show_umkm, 'kabkota_id') ?>';
+    if (initialProvinsiId) {
+      fetchKabKota(initialProvinsiId, initialKabKotaId);
+    }
+
+    // Fetch on provinsi change
+    $('#provinsi_id').on('change', function() {
+      const provinsiId = $(this).val();
+      fetchKabKota(provinsiId);
+    });
   });
 </script>

@@ -17,9 +17,11 @@ class Umkm
             u.*,
             k.nama AS kabkota,
             ku.nama AS kategori_umkm,
-            b.nama AS pembina
+            b.nama AS pembina,
+            p.nama AS provinsi
             FROM umkm u
             LEFT JOIN kabkota k ON u.kabkota_id = k.id
+            LEFT JOIN provinsi p ON k.provinsi_id = p.id
             LEFT JOIN kategori_umkm ku ON u.kategori_umkm_id = ku.id
             LEFT JOIN pembina b ON u.pembina_id = b.id
             "
@@ -35,9 +37,11 @@ class Umkm
             u.*,
             k.nama AS kabkota,
             ku.nama AS kategori_umkm,
-            b.nama AS pembina
+            b.nama AS pembina,
+            p.id AS provinsi_id
             FROM umkm u
             LEFT JOIN kabkota k ON u.kabkota_id = k.id
+            LEFT JOIN provinsi p ON k.provinsi_id = p.id
             LEFT JOIN kategori_umkm ku ON u.kategori_umkm_id = ku.id
             LEFT JOIN pembina b ON u.pembina_id = b.id
             WHERE u.id=$id
@@ -98,9 +102,21 @@ class Umkm
         return $row;
     }
 
-    public function getKabKota()
+    public function getProvinsi()
     {
-        $stmt = $this->pdo->query("SELECT * FROM kabkota");
+        $stmt = $this->pdo->query("SELECT * FROM provinsi");
+        return $stmt->fetchAll();
+    }
+
+    public function getKabKota($provinsi_id = null)
+    {
+        if ($provinsi_id) {
+            $stmt = $this->pdo->prepare("SELECT * FROM kabkota WHERE provinsi_id = :provinsi_id");
+            $stmt->bindParam(':provinsi_id', $provinsi_id);
+            $stmt->execute();
+        } else {
+            $stmt = $this->pdo->query("SELECT * FROM kabkota");
+        }
         return $stmt->fetchAll();
     }
 
