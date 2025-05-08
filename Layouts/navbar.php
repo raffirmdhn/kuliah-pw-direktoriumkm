@@ -133,7 +133,7 @@ if (isset($_POST['type'])) {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="./?url=kategoriumkm" class="nav-link <?php echo strpos($activeUrl, 'kategoriumkm') === 0 ? 'active' : ''; ?>">
+                    <a href="./?url=kategori_umkm" class="nav-link <?php echo strpos($activeUrl, 'kategoriumkm') === 0 ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-tags"></i> <!-- Icon for Kategori UMKM -->
                         <p>Kategori UMKM</p>
                     </a>
