@@ -1,5 +1,16 @@
 <?php
 $activeUrl = $_GET['url'] ?? ''; // Get the current URL parameter or default to 'home'
+
+if (isset($_POST['type'])) {
+    if ($_POST['type'] == 'logout') {
+        // Handle logout logic here
+        // For example, destroy the session or redirect to the login page
+        session_start();
+        session_destroy();
+        header("Location: ?url=login");
+        exit();
+    }
+}
 ?>
 
 <!-- Navbar -->
@@ -46,10 +57,22 @@ $activeUrl = $_GET['url'] ?? ''; // Get the current URL parameter or default to 
                 <i class="fas fa-expand-arrows-alt"></i>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
-                <i class="fas fa-th-large"></i>
+
+        <!-- Profile Dropdown -->
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" role="button">
+                <i class="fas fa-user-circle"></i>
             </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <span class="dropdown-item dropdown-header fs-15">Hello, User</span>
+                <div class="dropdown-divider"></div>
+                <form action="" method="POST">
+                    <input type="hidden" name="type" value="logout">
+                    <button type="submit" class="dropdown-item dropdown-footer">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                    </button>
+                </form>
+            </div>
         </li>
     </ul>
 </nav>
@@ -83,13 +106,13 @@ $activeUrl = $_GET['url'] ?? ''; // Get the current URL parameter or default to 
                 <!-- Add icons to the links using the .nav-icon class -->
                 <li class="nav-header">Content</li>
                 <li class="nav-item">
-                    <a href="./?url=umkm" class="nav-link <?php echo $activeUrl === 'umkm' ? 'active' : ''; ?>">
+                    <a href="./?url=umkm" class="nav-link <?php echo strpos($activeUrl, 'umkm') === 0 ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-clipboard-check"></i> <!-- Updated Icon for Umkm -->
                         <p>UMKM</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="./?url=pembina" class="nav-link <?php echo $activeUrl === 'pembina' ? 'active' : ''; ?>">
+                    <a href="./?url=pembina" class="nav-link <?php echo strpos($activeUrl, 'pembina') === 0 ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-user-tie"></i>
                         <p>Pembina</p>
                     </a>
@@ -98,19 +121,19 @@ $activeUrl = $_GET['url'] ?? ''; // Get the current URL parameter or default to 
 
                 <li class="nav-header">Master Data</li>
                 <li class="nav-item">
-                    <a href="./?url=provinsi" class="nav-link <?php echo $activeUrl === 'provinsi' ? 'active' : ''; ?>">
+                    <a href="./?url=provinsi" class="nav-link <?php echo strpos($activeUrl, 'provinsi') === 0 ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-map"></i>
                         <p>Provinsi</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="./?url=kabkota" class="nav-link <?php echo $activeUrl === 'kabkota' ? 'active' : ''; ?>">
+                    <a href="./?url=kabkota" class="nav-link <?php echo strpos($activeUrl, 'kabkota') === 0 ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-city"></i>
                         <p>Kabupaten / Kota</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="./?url=kategoriumkm" class="nav-link <?php echo $activeUrl === 'kategoriumkm' ? 'active' : ''; ?>">
+                    <a href="./?url=kategoriumkm" class="nav-link <?php echo strpos($activeUrl, 'kategoriumkm') === 0 ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-tags"></i> <!-- Icon for Kategori UMKM -->
                         <p>Kategori UMKM</p>
                     </a>

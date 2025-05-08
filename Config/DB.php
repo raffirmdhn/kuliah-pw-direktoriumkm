@@ -4,7 +4,7 @@
  * File ini akan digunakan untuk memanggil database
  */
 $host = "localhost";
-$dbname = "kuliah_dbpuskesmas";
+$dbname = "kuliah_direktoriumkm";
 $username = "root";
 $password = "";
 

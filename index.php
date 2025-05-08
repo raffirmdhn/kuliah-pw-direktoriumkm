@@ -11,6 +11,8 @@ if (!$url) {
     $page->callLanding();
 } else if ($url == 'login') {
     $page->callLogin();
+} else if ($url == 'register') {
+    $page->callRegister();
 } else {
     $page->callAdmin();
 }

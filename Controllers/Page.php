@@ -22,9 +22,14 @@ class Page
     {
         include_once('views/landing.php');
     }
-    
+
     public function callLogin()
     {
         include_once('views/login.php');
+    }
+    
+    public function callRegister()
+    {
+        include_once('views/register.php');
     }
 }
