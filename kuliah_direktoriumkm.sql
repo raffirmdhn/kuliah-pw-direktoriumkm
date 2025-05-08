@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 08, 2025 at 02:21 AM
+-- Generation Time: May 08, 2025 at 09:05 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.2.28
 
@@ -33,7 +33,18 @@ CREATE TABLE `kabkota` (
   `latitude` double NOT NULL,
   `longitude` double NOT NULL,
   `provinsi_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `kabkota`
+--
+
+INSERT INTO `kabkota` (`id`, `nama`, `latitude`, `longitude`, `provinsi_id`) VALUES
+(1, 'Kota Bandung', -6.914744, 107.60981, 1),
+(2, 'Kabupaten Bandung', -7.112664, 107.749033, 1),
+(3, 'Kota Semarang', -6.966667, 110.416664, 2),
+(4, 'Kota Surabaya', -7.250445, 112.768845, 3),
+(5, 'Kota Yogyakarta', -7.79558, 110.36949, 5);
 
 -- --------------------------------------------------------
 
@@ -44,7 +55,18 @@ CREATE TABLE `kabkota` (
 CREATE TABLE `kategori_umkm` (
   `id` int NOT NULL,
   `nama` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `kategori_umkm`
+--
+
+INSERT INTO `kategori_umkm` (`id`, `nama`) VALUES
+(1, 'Kuliner'),
+(2, 'Fashion'),
+(3, 'Kerajinan'),
+(4, 'Agrobisnis'),
+(5, 'Teknologi');
 
 -- --------------------------------------------------------
 
@@ -59,7 +81,18 @@ CREATE TABLE `pembina` (
   `tgl_lahir` date NOT NULL,
   `tmp_lahir` varchar(30) NOT NULL,
   `keahlian` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pembina`
+--
+
+INSERT INTO `pembina` (`id`, `nama`, `gender`, `tgl_lahir`, `tmp_lahir`, `keahlian`) VALUES
+(2, 'Andi Saputra', 'L', '1980-05-12', 'Bandung', 'Manajemen UMKM'),
+(3, 'Siti Aminah', 'P', '1985-08-23', 'Yogyakarta', 'Pemasaran Digital'),
+(4, 'Budi Hartono', 'L', '1975-03-30', 'Semarang', 'Keuangan Mikro'),
+(5, 'Rina Kartika', 'P', '1990-11-15', 'Surabaya', 'Desain Produk'),
+(6, 'Dedi Santos', 'L', '1982-02-10', 'Jakarta', 'Teknologi Informasi');
 
 -- --------------------------------------------------------
 
@@ -73,7 +106,18 @@ CREATE TABLE `provinsi` (
   `ibukota` varchar(45) NOT NULL,
   `latitude` double NOT NULL,
   `longitude` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `provinsi`
+--
+
+INSERT INTO `provinsi` (`id`, `nama`, `ibukota`, `latitude`, `longitude`) VALUES
+(1, 'Jawa Barat', 'Bandung', -6.914744, 107.60981),
+(2, 'Jawa Tengah', 'Semarang', -6.966667, 110.416664),
+(3, 'Jawa Timur', 'Surabaya', -7.250445, 112.768845),
+(4, 'DKI Jakarta', 'Jakarta', -6.208763, 106.845599),
+(5, 'DI Yogyakarta', 'Yogyakarta', -7.79558, 110.36949);
 
 -- --------------------------------------------------------
 
@@ -87,13 +131,21 @@ CREATE TABLE `umkm` (
   `modal` double NOT NULL,
   `pemilik` varchar(45) NOT NULL,
   `alamat` varchar(45) NOT NULL,
-  `website` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
+  `website` varchar(45) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `email` varchar(45) CHARACTER SET utf8mb4 DEFAULT NULL,
   `rating` int NOT NULL,
   `kabkota_id` int NOT NULL,
   `kategori_umkm_id` int NOT NULL,
   `pembina_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `umkm`
+--
+
+INSERT INTO `umkm` (`id`, `nama`, `modal`, `pemilik`, `alamat`, `website`, `email`, `rating`, `kabkota_id`, `kategori_umkm_id`, `pembina_id`) VALUES
+(2, 'Toko Baju Erlangga', 8000000, 'Erlangga Abidin', 'Parung Ganteng', '', '', 3, 2, 2, 5),
+(3, 'Nama', 10000, 'Ras', 'askd', '', '', 3, 5, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -103,9 +155,17 @@ CREATE TABLE `umkm` (
 
 CREATE TABLE `user` (
   `id` int NOT NULL,
+  `nama` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `nama`, `email`, `password`) VALUES
+(1, 'Admin', 'admin@gmail.com', '$2y$10$MMeyW.XVAO7U5fz..Hi.Nu6r.OrdWfb5hSrsWDJEaQrTfEYEp85sa');
 
 --
 -- Indexes for dumped tables
@@ -159,37 +219,37 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `kabkota`
 --
 ALTER TABLE `kabkota`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `kategori_umkm`
 --
 ALTER TABLE `kategori_umkm`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `pembina`
 --
 ALTER TABLE `pembina`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `provinsi`
 --
 ALTER TABLE `provinsi`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `umkm`
 --
 ALTER TABLE `umkm`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
