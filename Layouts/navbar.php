@@ -3,9 +3,6 @@ $activeUrl = $_GET['url'] ?? ''; // Get the current URL parameter or default to 
 
 if (isset($_POST['type'])) {
     if ($_POST['type'] == 'logout') {
-        // Handle logout logic here
-        // For example, destroy the session or redirect to the login page
-        session_start();
         session_destroy();
         header("Location: ?url=login");
         exit();
@@ -64,7 +61,7 @@ if (isset($_POST['type'])) {
                 <i class="fas fa-user-circle"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header fs-15">Hello, User</span>
+                <span class="dropdown-item dropdown-header" style="font-size: 15px;">Hello, <span style="font-weight: bold;"><?= $_SESSION['user']['nama'] ?></span></span>
                 <div class="dropdown-divider"></div>
                 <form action="" method="POST">
                     <input type="hidden" name="type" value="logout">
